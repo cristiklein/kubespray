@@ -104,6 +104,7 @@
   when:
     - access_ip is defined
     - not ignore_assert_errors
+    - not not_pingable
 
 - name: Stop if RBAC is not enabled when dashboard is enabled
   assert:
