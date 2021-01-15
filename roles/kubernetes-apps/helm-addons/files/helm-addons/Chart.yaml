@@ -1,0 +1,14 @@
+apiVersion: v2
+name: helm-addons
+description: An Umbrella Chart for Kubernetes Addons
+type: application
+
+# Unsure what version to give this chart, but following the kubespray version
+# feels natural.
+version: 2.15.0
+
+dependencies:
+- name: ingress-nginx
+  version: ~3.20.1
+  repository: 'https://kubernetes.github.io/ingress-nginx'
+  condition: ingress-nginx.enabled

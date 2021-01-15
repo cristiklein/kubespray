@@ -5,6 +5,12 @@
 
 # Helm deployment
 helm_enabled: false
+helm_addons_enabled: false
+helm_addons_values:
+  ingress-nginx:
+    # Enable nginx Ingress controller
+    enabled: false
+    # For other configuration values, see https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml
 
 # Registry deployment
 registry_enabled: false

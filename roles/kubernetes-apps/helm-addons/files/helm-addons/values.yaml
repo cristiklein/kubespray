@@ -1,0 +1,14 @@
+## Enable nginx Ingress controller
+ingress-nginx:
+  enabled: false
+
+  ## This works best for bare-metal deployments or when manually provisioning
+  ## a load-balancer. YMMV.
+  controller:
+    kind: DaemonSet
+    hostNetwork: true
+    hostPort:
+      enabled: true
+    service:
+      type: ClusterIP
+  ## For other configuration values, see https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml

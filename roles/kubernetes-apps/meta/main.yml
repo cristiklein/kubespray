@@ -10,6 +10,13 @@ dependencies:
     tags:
       - helm
 
+  - role: kubernetes-apps/helm-addons
+    when:
+      - helm_enabled
+      - helm_addons_enabled
+    tags:
+      - helm_addons
+
   - role: kubernetes-apps/registry
     when:
       - registry_enabled

@@ -1,0 +1,1 @@
+Kubernetes Addons have been installed. Enjoy a fully-featured production Kubernetes!

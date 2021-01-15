@@ -1,0 +1,33 @@
+---
+- name: Helm Addons | Copy umbrella Chart
+  synchronize:
+    src: helm-addons
+    dest: '~'
+  become: no
+  notify:
+    - Helm Addons | Install/Upgrade
+
+- name: Helm Addons | Create addons namespace
+  # NOTE: This can be created via helm --create-namespace,
+  # but then we could not add the pretty kubespray label.
+  command:
+    cmd: "{{ bin_dir }}/kubectl apply -f -"
+    stdin: |
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: kube-addons-system
+        labels:
+          app.kubernetes.io/managed-by: kubespray
+  register: result
+  changed_when: '"configured" in result.stdout'
+  notify:
+    - Helm Addons | Install/Upgrade
+
+- name: Helm Addons | Copy Values File
+  copy:
+    content: '{{ helm_addons_values | to_nice_yaml }}'
+    dest: helm-addons-values.yaml
+  become: no
+  notify:
+    - Helm Addons | Install/Upgrade

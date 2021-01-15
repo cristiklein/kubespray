@@ -1,0 +1,4 @@
+---
+- name: Helm Addons | Install/Upgrade
+  command:
+    cmd: "{{ bin_dir }}/helm upgrade --namespace kube-addons-system --install kube-addons-system helm-addons --values helm-addons-values.yaml"
