@@ -98,6 +98,7 @@
     recurse: yes
     mode: 0755
     owner: "{{ ansible_ssh_user | default(ansible_user_id) }}"
+  check_mode: no
   when:
     - ansible_os_family not in ["Flatcar Container Linux by Kinvolk"]
 
@@ -107,6 +108,7 @@
     state: directory
     recurse: yes
     mode: 0755
+  check_mode: no
   delegate_to: localhost
   connection: local
   delegate_facts: no
