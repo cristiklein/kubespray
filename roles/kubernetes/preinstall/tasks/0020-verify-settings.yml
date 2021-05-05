@@ -178,6 +178,7 @@
   register: calico_version_on_server
   async: 10
   poll: 3
+  check_mode: no
   run_once: yes
   changed_when: false
   failed_when: false
