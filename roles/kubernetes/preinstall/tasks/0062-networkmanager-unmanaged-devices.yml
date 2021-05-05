@@ -1,17 +1,13 @@
 ---
-- name: NetworkManager | Check if host has NetworkManager
-  # noqa 303 Should we use service_facts for this?
-  command: systemctl is-active --quiet NetworkManager.service
-  register: nm_check
-  failed_when: false
-  changed_when: false
+- name: Populate service facts
+  ansible.builtin.service_facts:
 
 - name: NetworkManager | Ensure NetworkManager conf.d dir
   file:
     path: "/etc/NetworkManager/conf.d"
     state: directory
     recurse: yes
-  when: nm_check.rc == 0
+  when: ansible_facts.services["NetworkManager.service"] is defined
 
 - name: NetworkManager | Prevent NetworkManager from managing Calico interfaces (cali*/tunl*/vxlan.calico)
   copy:
@@ -20,7 +16,7 @@
       unmanaged-devices+=interface-name:cali*;interface-name:tunl*;interface-name:vxlan.calico
     dest: /etc/NetworkManager/conf.d/calico.conf
   when:
-    - nm_check.rc == 0
+    - ansible_facts.services["NetworkManager.service"] is defined
     - kube_network_plugin == "calico"
   notify: Preinstall | reload NetworkManager
 
@@ -32,5 +28,5 @@
       [keyfile]
       unmanaged-devices+=interface-name:kube-ipvs0;interface-name:nodelocaldns
     dest: /etc/NetworkManager/conf.d/k8s.conf
-  when: nm_check.rc == 0
+  when: ansible_facts.services["NetworkManager.service"] is defined
   notify: Preinstall | reload NetworkManager
