@@ -2,6 +2,18 @@
 - name: Check ansible version
   import_playbook: ansible_version.yml
 
+- name: Display check mode policy
+  gather_facts: False
+  hosts: localhost
+  tags: always
+  tasks:
+    - debug:
+        msg:
+          - Check mode is ON.
+          - Kubespray WILL run commands to gather facts and perform downloads.
+          - Kubespray WILL NOT touch the Kubernetes cluster.
+      when: ansible_check_mode
+
 - name: Ensure compatibility with old groups
   import_playbook: legacy_groups.yml
 
