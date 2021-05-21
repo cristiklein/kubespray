@@ -1,6 +1,7 @@
 ---
 - name: Calculate etcd cert serial
   command: "openssl x509 -in {{ kube_cert_dir }}/apiserver-etcd-client.crt -noout -serial"
+  check_mode: no
   register: "etcd_client_cert_serial_result"
   changed_when: false
   tags:
