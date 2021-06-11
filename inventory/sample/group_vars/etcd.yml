@@ -20,3 +20,7 @@
 
 ## Settings for etcd deployment type
 etcd_deployment_type: docker
+
+## Custom listen address for etcd if advertised IP differs from listening IP, e.g., when a VM is behind a NAT.
+## Default disable; etcd will listen in etcd_address and localhost.
+# etcd_listen_address: 0.0.0.0
